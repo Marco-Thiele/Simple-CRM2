@@ -5,6 +5,7 @@ import { Firestore, collectionData, collection, doc } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { addDoc } from 'firebase/firestore';
 import { getFirestore } from "firebase/firestore";
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -19,13 +20,13 @@ export class DialogAddUserComponent {
   //items;
 
   constructor() {
-   // const itemCollection = collection(this.firestore, 'users');
-   // this.item$ = collectionData(itemCollection);
-    // this.items = this.item$.subscribe((list) => {
-    //   list.forEach(element => {
-    //     console.log(element)
-    //   });
-    // })
+    // const itemCollection = collection(this.firestore, 'users');
+    //  this.item$ = collectionData(itemCollection);
+    //  this.items = this.item$.subscribe((list) => {
+    //    list.forEach(element => {
+    //      console.log(element)
+    //    });
+    //  })
 
   }
 
@@ -34,23 +35,16 @@ export class DialogAddUserComponent {
   }
 
 
-  async saveUser(){
+  async saveUser() {
     this.user.birthDate = this.birthdate?.getTime();
-    console.log('user', this.user );
-
-     await addDoc(this.getUsersRef(), this.user.toJSON())
-     .catch((err) => {
-      console.error(err)
-     })
-    .then((result:any) => {
-      console.log('Adding user finished', result)
-    })
-
-    // this.firestore.collection(this.firestore, 'users')
-    // .add(this.user.toJSON())
-    // .than((result:any) => {
-    //   console.log('Adding user finished', result)
-    // })
+    console.log('user', this.user); 
+    await addDoc(collection(this.firestore, 'users'), this.user.toJSON())
+      .catch((err) => {
+        console.error(err);
+      })
+      .then((result: any) => {
+        console.log('Adding user finished', result);
+      });
   }
 
 
